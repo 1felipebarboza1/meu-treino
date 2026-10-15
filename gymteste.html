@@ -76,7 +76,7 @@
     .day:hover {
         transform: translateY(-3px);
         border-color: #3b82f6;
-        box-shadow: 0 6px 25px rgba(59,130,246,0.4);
+        box-shadow: 0 6px 25 rgba(59,130,246,0.4);
     }
 
     .day-name {
@@ -93,6 +93,10 @@
 
     .exercise-container {
         display: none;
+    }
+
+    .exercise-container.active {
+        display: block;
     }
 
     .exercise-header {
@@ -147,12 +151,6 @@
         font-weight: 600;
         color: #fff;
         flex: 1;
-    }
-
-    .exercise-details {
-        font-size: 14px;
-        color: #9ca3af;
-        margin-bottom: 10px;
     }
 
     .complete-checkbox {
@@ -257,10 +255,6 @@
         display: none;
     }
 
-    .exercise-container.active {
-        display: block;
-    }
-
     .rest-day {
         background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%);
     }
@@ -274,11 +268,9 @@
         .container {
             padding: 15px;
         }
-        
         .exercise-controls {
             gap: 10px;
         }
-        
         .control-group {
             min-width: 70px;
         }
@@ -360,8 +352,8 @@
             ],
             quinta: [
                 { id: "qi1", nome: "Puxada Alta", series: 4, reps: 10, carga: 45, concluido: false },
-{ id: "qi2", nome: "Remada Baixa", series: 3, reps: 12, carga: 35, concluido: false },
-{ id: "qi3", nome: "Rosca Direta", series: 3, reps: 12, carga: 10, concluido: false }
+                { id: "qi2", nome: "Remada Baixa", series: 3, reps: 12, carga: 35, concluido: false },
+                { id: "qi3", nome: "Rosca Direta", series: 3, reps: 12, carga: 10, concluido: false }
 ],
 sexta: [
 { id: "sx1", nome: "Stiff", series: 4, reps: 10, carga: 25, concluido: false },
@@ -372,31 +364,36 @@ let dadosTreino = {};
 let diaAtualAtivo = '';
 function inicializarBancoDados() {
 try {
-const dadosSalvos = localStorage.getItem('meuTreino_progresso');
-if (dadosSalvos) {
+const dadosSalvos = window.localStorage.getItem('meuTreino_progresso');
+if (dadosSalvos && dadosSalvos !== "null" && dadosSalvos !== "undefined") {
 dadosTreino = JSON.parse(dadosSalvos);
 } else {
-dadosTreino = bancoInicial;
+dadosTreino = JSON.parse(JSON.stringify(bancoInicial));
 salvarNoDispositivo();
 }
 } catch (e) {
-dadosTreino = bancoInicial;
+dadosTreino = JSON.parse(JSON.stringify(bancoInicial));
 }
 atualizarTodosOsProgressosIniciais();
 }
 function salvarNoDispositivo() {
 try {
-localStorage.setItem('meuTreino_progresso', JSON.stringify(dadosTreino));
+if (dadosTreino && Object.keys(dadosTreino).length > 0) {
+window.localStorage.setItem('meuTreino_progresso', JSON.stringify(dadosTreino));
+}
 } catch (e) {
-console.error("Erro ao salvar no localStorage", e);
+console.error("Falha ao acessar o localStorage", e);
 }
 }
 function atualizarTodosOsProgressosIniciais() {
+if (!dadosTreino) return;
 Object.keys(dadosTreino).forEach(dia => {
+if (dadosTreino[dia]) {
 const total = dadosTreino[dia].length;
 const concluidos = dadosTreino[dia].filter(ex => ex.concluido).length;
 const el = document.getElementById(${dia}-progress);
 if (el) el.innerText = ${concluidos}/${total} exercícios;
+}
 });
 }
 function showExercises(dia) {
@@ -415,7 +412,8 @@ atualizarTodosOsProgressosIniciais();
 function renderizarExerciciosDoDia() {
 const container = document.getElementById('exerciseList');
 container.innerHTML = '';
-const exercicios = dadosTreino[diaAtualAtivo] || [];
+if (!diaAtualAtivo || !dadosTreino[diaAtualAtivo]) return;
+const exercicios = dadosTreino[diaAtualAtivo];
 let concluidos = 0;
 exercicios.forEach(ex => {
 if (ex.concluido) concluidos++;
@@ -453,6 +451,7 @@ ${ex.carga}
 document.getElementById('headerProgress').innerText = ${concluidos}/${exercicios.length};
 }
 function alterarValor(id, campo, alteracao) {
+if (!diaAtualAtivo || !dadosTreino[diaAtualAtivo]) return;
 const exercicio = dadosTreino[diaAtualAtivo].find(ex => ex.id === id);
 if (exercicio) {
 exercicio[campo] = Math.max(0, exercicio[campo] + alteracao);
@@ -460,10 +459,8 @@ salvarNoDispositivo();
 renderizarExerciciosDoDia();
 }
 }
-function anonymizeClick(e) {
-e.stopPropagation();
-}
 function alternarConclusao(id) {
+if (!diaAtualAtivo || !dadosTreino[diaAtualAtivo]) return;
 const exercicio = dadosTreino[diaAtualAtivo].find(ex => ex.id === id);
 if (exercicio) {
 exercicio.concluido = !exercicio.concluido;
@@ -471,5 +468,9 @@ salvarNoDispositivo();
 renderizarExerciciosDoDia();
 }
 }
-// Método de inicialização compatível e seguro para o Safari Mobile do iOS
-document.addEventListener('DOMContentLoaded', inicializarBancoDados);
+// Garante a inicialização correta tanto em navegadores normais quanto em PWAs instalados no iOS
+if (document.readyState === "loading") {
+document.addEventListener("DOMContentLoaded", inicializarBancoDados);
+} else {
+inicializarBancoDados();
+}
