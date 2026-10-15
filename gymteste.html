@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +15,6 @@
   <link rel="apple-touch-icon" href="/icon-192.png">
 
   <style>
-
     body {
         margin: 0;
         font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -33,7 +34,6 @@
         padding: 25px;
     }
 
-    /* Cabeçalho com destaque */
     h1 {
         text-align: center;
         background: linear-gradient(90deg, #1da1f2, #3b82f6, #60a5fa);
@@ -281,26 +281,27 @@
             min-width: 70px;
         }
     }
-</style>
+  </style>
 </head>
 <body>
     <main class="container">
         <h1>💪 Meu Treino</h1>
         
+        <!-- Lista de Dias da Semana -->
         <div id="dayList" class="day-list">
             <div class="day" onclick="showExercises('segunda')">
                 <div class="day-name">Segunda-feira</div>
                 <div class="day-info">
-                    <div>PUSH - 15x</div>
-                    <div id="segunda-progress">0/5 exercícios</div>
+                    <div>PUSH - Peito, Ombro e Tríceps</div>
+                    <div id="segunda-progress">0/0 exercícios</div>
                 </div>
             </div>
             
             <div class="day" onclick="showExercises('terca')">
                 <div class="day-name">Terça-feira</div>
                 <div class="day-info">
-                    <div>QUADS - 15x</div>
-                    <div id="terca-progress">0/4 exercícios</div>
+                    <div>QUADS - Quadríceps</div>
+                    <div id="terca-progress">0/0 exercícios</div>
                 </div>
             </div>
             
@@ -308,1275 +309,155 @@
                 <div class="day-name">Quarta-feira</div>
                 <div class="day-info">
                     <div>DESCANSO</div>
-                    <div id="quarta-progress">0/5 exercícios</div>
+                    <div id="quarta-progress">0/0 exercícios</div>
                 </div>
             </div>
             
             <div class="day" onclick="showExercises('quinta')">
                 <div class="day-name">Quinta-feira</div>
                 <div class="day-info">
-                    <div>PULL - 15x</div>
-                    <div id="quinta-progress">0/6 exercícios</div>
+                    <div>PULL - Costas e Bíceps</div>
+                    <div id="quinta-progress">0/0 exercícios</div>
                 </div>
             </div>
             
             <div class="day" onclick="showExercises('sexta')">
                 <div class="day-name">Sexta-feira</div>
                 <div class="day-info">
-                    <div>LEGS POST - 15x</div>
-                    <div id="sexta-progress">0/4 exercícios</div>
-                </div>
-            </div>
-
-            <div class="day" onclick="showExercises('sabado')">
-                <div class="day-name">Sábado</div>
-                <div class="day-info">
-                    <div>FULL UPPER BODY</div>
-                    <div id="sabado-progress">0/6 exercícios</div>
-                </div>
-            </div>
-
-            <div class="day rest-day" onclick="showExercises('domingo')">
-                <div class="day-name">Domingo</div>
-                <div class="day-info">
-                    <div>DESCANSO</div>
-                    <div id="domingo-progress">0/4 exercícios</div>
+                    <div>LEGS POST - Posterior de Coxa</div>
+                    <div id="sexta-progress">0/0 exercícios</div>
                 </div>
             </div>
         </div>
 
-        <!-- SEGUNDA - PUSH -->
-        <div id="segunda" class="exercise-container">
+        <!-- Container de Exercícios Dinâmico -->
+        <div id="exerciseContainer" class="exercise-container">
             <div class="exercise-header">
-                <h2 class="exercise-day-title">Segunda-feira - PUSH (15x)</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
+                <button class="back-btn" onclick="backToDays()">← Voltar</button>
+                <h2 id="exerciseDayTitle" class="exercise-day-title">Dia</h2>
+                <div id="headerProgress" class="progress-info">0/0</div>
             </div>
-            <div class="progress-info">
-                <span id="segunda-completed">0</span> de 5 exercícios concluídos
-            </div>
-            
-            <div class="exercise" data-exercise="supino-inclinado">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Supino Inclinado Halteres</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">18</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="crossover">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Crossover Polia Alta</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">8</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">15</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="elevacao-lateral">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Elevação Lateral Halteres</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">12.5</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="voador">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Voador</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">35</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="triceps-frances">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Tríceps Francês</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">12</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">40</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TERÇA - QUADS -->
-        <div id="terca" class="exercise-container">
-            <div class="exercise-header">
-                <h2 class="exercise-day-title">Terça-feira - QUADS (15x)</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
-            </div>
-            <div class="progress-info">
-                <span id="terca-completed">0</span> de 4 exercícios concluídos
-            </div>
-            
-            <div class="exercise" data-exercise="agachamento-smith">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Agachamento Smith ou Hack</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">8</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">25</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="leg-press">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Leg Press 45°</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">60</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="flexor-deitado">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Flexor Deitado (DROP MEC.)</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">12</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">40</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="extensor">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Extensor</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">14</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">100</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUARTA - DESCANSO -->
-        <div id="quarta" class="exercise-container">
-            <div class="exercise-header">
-                <h2 class="exercise-day-title">Quarta-feira - DESCANSO</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
-            </div>
-            <div class="progress-info">
-                <span id="quarta-completed">0</span> de 5 exercícios concluídos
-            </div>
-            
-            <div class="exercise rest-exercise" data-exercise="prancha-frontal">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Prancha Frontal</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Tempo (s)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -5)">-</button>
-                            <div class="control-value" data-type="reps">30</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="prancha-lateral">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Prancha Lateral (cada lado)</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Tempo (s)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -5)">-</button>
-                            <div class="control-value" data-type="reps">30</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="crunches">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Crunches</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="elevacao-pernas">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Elevação de Pernas</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="torcao-russa">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Torção Russa + Cardio</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUINTA - PULL -->
-        <div id="quinta" class="exercise-container">
-            <div class="exercise-header">
-                <h2 class="exercise-day-title">Quinta-feira - PULL (15x)</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
-            </div>
-            <div class="progress-info">
-                <span id="quinta-completed">0</span> de 6 exercícios concluídos
-            </div>
-            
-            <div class="exercise" data-exercise="remada-zest">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Remada Zest</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 7R - 25kg/25kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">7</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">25</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="puxada-alta">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Puxada Alta Aberta</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">35</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="remada-baixa">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Remada Baixa Fechada</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 9R - 40kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">40</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="voador-invertido">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Voador Invertido</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 7R - 40kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">7</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">40</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="rosca-direta-w">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Rosca Direta Barra W</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 11R - 20kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">11</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="rosca-inversa">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Rosca Inversa Polia</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">4x - Polia</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">12</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">25</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SEXTA - LEGS POST -->
-        <div id="sexta" class="exercise-container">
-            <div class="exercise-header">
-                <h2 class="exercise-day-title">Sexta-feira - LEGS POST (15x)</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
-            </div>
-            <div class="progress-info">
-                <span id="sexta-completed">0</span> de 4 exercícios concluídos
-            </div>
-            
-            <div class="exercise" data-exercise="terra-sumo">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Levantamento Terra Sumô</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">4x 8R - 40kg/40kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">8</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">40</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="flexor-deitado-9p">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Flexor Deitado (9P)</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">4x 8R - 9 Placas</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">8</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Placas</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">9</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="extensor-100">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Extensor</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 10R - 100kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">10</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">100</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="flexor-sentado">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Flexor Sentado</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">4x 10R - 80kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">4</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">10</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">80</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SÁBADO - FULL UPPER BODY -->
-        <div id="sabado" class="exercise-container">
-            <div class="exercise-header">
-                <h2 class="exercise-day-title">Sábado - FULL UPPER BODY</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
-            </div>
-            <div class="progress-info">
-                <span id="sabado-completed">0</span> de 6 exercícios concluídos
-            </div>
-            
-            <div class="exercise" data-exercise="supino-reto">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Supino Reto</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 6R - 15kg/15kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">6</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">15</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="crucifixo-inclinado">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Crucifixo Inclinado Halteres</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 8R - 12.5kg/12.5kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">8</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">12.5</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="elevacao-lateral-polia">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Elevação Lateral Polia</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 10R (10kg) + 5R (15kg)</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">15</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">10</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="remada-cavalinho">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Remada Cavalinho Fechada</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">8</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">15</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="rosca-simultanea">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Rosca Simultânea Banco</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x 7R - 7kg/7kg</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">7</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">7</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise" data-exercise="triceps-testa-w">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Tríceps Testa (Barra W)</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-                <div class="exercise-details">3x - Barra W</div>
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">10</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Peso (kg)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'weight', -0.5)">-</button>
-                            <div class="control-value" data-type="weight">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'weight', 0.5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- DOMINGO - DESCANSO -->
-        <div id="domingo" class="exercise-container">
-            <div class="exercise-header">
-                <h2 class="exercise-day-title">Domingo - DESCANSO</h2>
-                <button class="back-btn" onclick="showDayList()">← Voltar</button>
-            </div>
-            <div class="progress-info">
-                <span id="domingo-completed">0</span> de 4 exercícios concluídos
-            </div>
-            
-            <div class="exercise rest-exercise" data-exercise="prancha-frontal-dom">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Prancha Frontal</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Tempo (s)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -5)">-</button>
-                            <div class="control-value" data-type="reps">30</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="prancha-lateral-dom">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Prancha Lateral (cada lado)</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Tempo (s)</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -5)">-</button>
-                            <div class="control-value" data-type="reps">30</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 5)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="crunches-dom">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Crunches</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise rest-exercise" data-exercise="torcao-russa-dom">
-                <div class="exercise-header-row">
-                    <div class="exercise-name">Torção Russa + Cardio</div>
-                    <div class="complete-checkbox" onclick="toggleComplete(this)"></div>
-                </div>
-
-                <div class="exercise-controls">
-                    <div class="control-group">
-                        <div class="control-label">Séries</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'series', -1)">-</button>
-                            <div class="control-value" data-type="series">3</div>
-                            <button class="control-btn" onclick="changeValue(this, 'series', 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="control-label">Reps</div>
-                        <div class="control-input">
-                            <button class="control-btn" onclick="changeValue(this, 'reps', -1)">-</button>
-                            <div class="control-value" data-type="reps">20</div>
-                            <button class="control-btn" onclick="changeValue(this, 'reps', 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="exerciseList"></div>
         </div>
     </main>
 
     <script>
-        function showExercises(day) {
-            document.getElementById('dayList').classList.add('hidden');
-            document.getElementById(day).classList.add('active');
-        }
+        // Banco de dados base inicial do seu app
+        const bancoInicial = {
+            segunda: [
+                { id: "s1", nome: "Supino Reto", series: 4, reps: 10, carga: 20, concluido: false },
+                { id: "s2", nome: "Desenvolvimento Ombro", series: 3, reps: 12, carga: 12, concluido: false },
+                { id: "s3", nome: "Tríceps Pulley", series: 3, reps: 15, carga: 25, concluido: false }
+            ],
+            terca: [
+                { id: "t1", nome: "Agachamento Livre", series: 4, reps: 10, carga: 30, concluido: false },
+                { id: "t2", nome: "Leg Press 45", series: 4, reps: 12, carga: 120, concluido: false },
+                { id: "t3", nome: "Cadeira Extensora", series: 3, reps: 15, carga: 40, concluido: false }
+            ],
+            quarta: [
+                { id: "q1", nome: "Cardio Leve (Caminhada)", series: 1, reps: 45, carga: 0, concluido: false, rest: true }
+            ],
+            quinta: [
+                { id: "qi1", nome: "Puxada Alta", series: 4, reps: 10, carga: 45, concluido: false },
+                { id: "qi2", nome: "Remada Baixa", series: 3, reps: 12, carga: 35, concluido: false },{ id: "qi3", nome: "Rosca Direta", series: 3, reps: 12, carga: 10, concluido: false }
+],
+sexta: [
+{ id: "sx1", nome: "Stiff", series: 4, reps: 10, carga: 25, concluido: false },
+{ id: "sx2", nome: "Cadeira Flexora", series: 4, reps: 12, carga: 35, concluido: false }
+]
+};
+let dadosTreino = {};
+let diaAtualAtivo = '';
+// Carrega as informações gravadas no dispositivo ou define o banco inicial
+function inicializarBancoDados() {
+const dadosSalvos = localStorage.getItem('meuTreino_progresso');
+if (dadosSalvos) {
+dadosTreino = JSON.parse(dadosSalvos);
+} else {
+dadosTreino = bancoInicial;
+salvarNoDispositivo();
+}
+atualizarTodosOsProgressosIniciais();
+}
+function salvarNoDispositivo() {
+localStorage.setItem('meuTreino_progresso', JSON.stringify(dadosTreino));
+}
+function atualizarTodosOsProgressosIniciais() {
+Object.keys(dadosTreino).forEach(dia => {
+const total = dadosTreino[dia].length;
+const concluidos = dadosTreino[dia].filter(ex => ex.concluido).length;
+const el = document.getElementById(${dia}-progress);
+if (el) el.innerText = ${concluidos}/${total} exercícios;
+});
+}
+function showExercises(dia) {
+diaAtualAtivo = dia;
+document.getElementById('dayList').classList.add('hidden');
+document.getElementById('exerciseContainer').classList.add('active');
+const titulos = { segunda: "Push Day", terca: "Quads Day", quarta: "Descanso Ativo", quinta: "Pull Day", sexta: "Legs Post" };
+document.getElementById('exerciseDayTitle').innerText = titulos[dia] || "Exercícios";
+renderizarExerciciosDoDia();
+}
+function backToDays() {
+document.getElementById('dayList').classList.remove('hidden');
+document.getElementById('exerciseContainer').classList.remove('active');
+atualizarTodosOsProgressosIniciais();
+}
+function renderizarExerciciosDoDia() {
+const container = document.getElementById('exerciseList');
+container.innerHTML = '';
+const exercicios = dadosTreino[diaAtualAtivo] || [];
+let concluidos = 0;
+exercicios.forEach(ex => {
+if (ex.concluido) concluidos++;
+const classeRest = ex.rest ? 'rest-exercise' : '';
+const classeCheck = ex.concluido ? 'checked' : '';
+const classeCardConcluido = ex.concluido ? 'completed' : '';
+container.innerHTML += `
 
-        function showDayList() {
-            document.getElementById('dayList').classList.remove('hidden');
-            document.querySelectorAll('.exercise-container').forEach(container => {
-                container.classList.remove('active');
-            });
-        }
 
-        function toggleComplete(checkbox) {
-            const exercise = checkbox.closest('.exercise');
-            const isCompleted = checkbox.classList.contains('checked');
-            
-            if (isCompleted) {
-                checkbox.classList.remove('checked');
-                exercise.classList.remove('completed');
-            } else {
-                checkbox.classList.add('checked');
-                exercise.classList.add('completed');
-            }
-            
-            updateProgress();
-        }
+${ex.nome}
 
-        function changeValue(button, type, change) {
-            const valueElement = button.parentElement.querySelector('.control-value[data-type="' + type + '"]');
-            let currentValue = parseFloat(valueElement.textContent);
-            let newValue = currentValue + change;
-            
-            // Prevent negative values
-            if (newValue < 0) newValue = 0;
-            
-            // Format weight values to show decimals when needed
-            if (type === 'weight' && newValue % 1 !== 0) {
-                valueElement.textContent = newValue.toFixed(1);
-            } else {
-                valueElement.textContent = Math.round(newValue);
-            }
-        }
+Séries
 
-        function updateProgress() {
-            const containers = document.querySelectorAll('.exercise-container');
-            
-            containers.forEach(container => {
-                const dayId = container.id;
-                const exercises = container.querySelectorAll('.exercise');
-                const completedExercises = container.querySelectorAll('.exercise.completed');
-                const total = exercises.length;
-                const completed = completedExercises.length;
-                
-                // Update progress in day list
-                const progressElement = document.getElementById(dayId + '-progress');
-                if (progressElement) {
-                    progressElement.textContent = `${completed}/${total} exercícios`;
-                }
-                
-                // Update progress in exercise view
-                const completedElement = document.getElementById(dayId + '-completed');
-                if (completedElement) {
-                    completedElement.textContent = completed;
-                }
-            });
-        }
+-
+${ex.series}
++
 
-        // Initialize progress on page load
-        updateProgress();
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'990d5185b5e3c02a',t:'MTc2MDg0NTkwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+Reps
+
+-
+${ex.reps}
++
+
+${ex.rest ? 'Minutos' : 'Carga (kg)'}
+
+-
+${ex.carga}
++
+
+
+
+
+`;
+});
+document.getElementById('headerProgress').innerText = ${concluidos}/${exercicios.length};
+}
+function alterarValor(id, campo, alteracao) {
+const exercicio = dadosTreino[diaAtualAtivo].find(ex => ex.id === id);
+if (exercicio) {
+exercicio[campo] = Math.max(0, exercicio[campo] + alteracao);
+salvarNoDispositivo();
+renderizarExerciciosDoDia();
+}
+}
+function alternarConclusao(id) {
+const exercicio = dadosTreino[diaAtualAtivo].find(ex => ex.id === id);
+if (exercicio) {
+exercicio.concluido = !exercicio.concluido;
+salvarNoDispositivo();
+renderizarExerciciosDoDia();
+}
+}
+// Executa automaticamente ao abrir o App
+window.onload = inicializarBancoDados;
