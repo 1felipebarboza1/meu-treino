@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Meu Treino</title>
 
   <!-- Manifesto do Web App -->
@@ -10,22 +10,24 @@
 
   <!-- Configurações específicas para iPhone -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Meu Treino">
   <link rel="apple-touch-icon" href="/icon-192.png">
 
   <style>
     body {
         margin: 0;
-        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-family: "-apple-system", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background: linear-gradient(135deg, #0b1623 0%, #0d2036 50%, #122a4c 100%);
         color: #fff;
-        min-height: 100%;
+        min-height: 100vh;
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
     }
 
     html, body {
         height: 100%;
+        overflow-x: hidden;
     }
 
     .container {
@@ -292,7 +294,7 @@
             <div class="day" onclick="showExercises('segunda')">
                 <div class="day-name">Segunda-feira</div>
                 <div class="day-info">
-                    <div>PUSH - Peito, Ombro e Tríceps</div>
+                    <div>PUSH</div>
                     <div id="segunda-progress">0/0 exercícios</div>
                 </div>
             </div>
@@ -300,7 +302,7 @@
             <div class="day" onclick="showExercises('terca')">
                 <div class="day-name">Terça-feira</div>
                 <div class="day-info">
-                    <div>QUADS - Quadríceps</div>
+                    <div>QUADS</div>
                     <div id="terca-progress">0/0 exercícios</div>
                 </div>
             </div>
@@ -316,7 +318,7 @@
             <div class="day" onclick="showExercises('quinta')">
                 <div class="day-name">Quinta-feira</div>
                 <div class="day-info">
-                    <div>PULL - Costas e Bíceps</div>
+                    <div>PULL</div>
                     <div id="quinta-progress">0/0 exercícios</div>
                 </div>
             </div>
@@ -324,7 +326,7 @@
             <div class="day" onclick="showExercises('sexta')">
                 <div class="day-name">Sexta-feira</div>
                 <div class="day-info">
-                    <div>LEGS POST - Posterior de Coxa</div>
+                    <div>LEGS POST</div>
                     <div id="sexta-progress">0/0 exercícios</div>
                 </div>
             </div>
@@ -342,7 +344,6 @@
     </main>
 
     <script>
-        // Banco de dados base inicial do seu app
         const bancoInicial = {
             segunda: [
                 { id: "s1", nome: "Supino Reto", series: 4, reps: 10, carga: 20, concluido: false },
@@ -359,7 +360,8 @@
             ],
             quinta: [
                 { id: "qi1", nome: "Puxada Alta", series: 4, reps: 10, carga: 45, concluido: false },
-                { id: "qi2", nome: "Remada Baixa", series: 3, reps: 12, carga: 35, concluido: false },{ id: "qi3", nome: "Rosca Direta", series: 3, reps: 12, carga: 10, concluido: false }
+{ id: "qi2", nome: "Remada Baixa", series: 3, reps: 12, carga: 35, concluido: false },
+{ id: "qi3", nome: "Rosca Direta", series: 3, reps: 12, carga: 10, concluido: false }
 ],
 sexta: [
 { id: "sx1", nome: "Stiff", series: 4, reps: 10, carga: 25, concluido: false },
@@ -368,8 +370,8 @@ sexta: [
 };
 let dadosTreino = {};
 let diaAtualAtivo = '';
-// Carrega as informações gravadas no dispositivo ou define o banco inicial
 function inicializarBancoDados() {
+try {
 const dadosSalvos = localStorage.getItem('meuTreino_progresso');
 if (dadosSalvos) {
 dadosTreino = JSON.parse(dadosSalvos);
@@ -377,10 +379,17 @@ dadosTreino = JSON.parse(dadosSalvos);
 dadosTreino = bancoInicial;
 salvarNoDispositivo();
 }
+} catch (e) {
+dadosTreino = bancoInicial;
+}
 atualizarTodosOsProgressosIniciais();
 }
 function salvarNoDispositivo() {
+try {
 localStorage.setItem('meuTreino_progresso', JSON.stringify(dadosTreino));
+} catch (e) {
+console.error("Erro ao salvar no localStorage", e);
+}
 }
 function atualizarTodosOsProgressosIniciais() {
 Object.keys(dadosTreino).forEach(dia => {
@@ -451,6 +460,9 @@ salvarNoDispositivo();
 renderizarExerciciosDoDia();
 }
 }
+function anonymizeClick(e) {
+e.stopPropagation();
+}
 function alternarConclusao(id) {
 const exercicio = dadosTreino[diaAtualAtivo].find(ex => ex.id === id);
 if (exercicio) {
@@ -459,5 +471,5 @@ salvarNoDispositivo();
 renderizarExerciciosDoDia();
 }
 }
-// Executa automaticamente ao abrir o App
-window.onload = inicializarBancoDados;
+// Método de inicialização compatível e seguro para o Safari Mobile do iOS
+document.addEventListener('DOMContentLoaded', inicializarBancoDados);
